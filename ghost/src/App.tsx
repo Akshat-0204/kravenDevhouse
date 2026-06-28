@@ -9,6 +9,7 @@ import TestimonialSection from './sections/testimonialSection'
 import WhyUsSection from './sections/whyUsSection'
 import WorkWithUsSection from './sections/workWithUs'
 import heroImage from './assets/bgimg.gif'
+import WebDevServicePage from './pages/WebDevServicePage'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const navLinks = [
@@ -83,6 +84,11 @@ function ScrollShell() {
     return match?.label ?? 'Services'
   }, [location.pathname])
   const isServiceRoute = location.pathname.startsWith('/services/')
+  const isWebDevRoute = location.pathname === '/services/web-development'
+
+  if (isWebDevRoute) {
+    return <WebDevServicePage />
+  }
 
   return (
     <div className="bg-black text-white">
