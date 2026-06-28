@@ -1,0 +1,34 @@
+.scroll-section {
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 30%),
+    linear-gradient(180deg, #000 0%, #050505 100%);
+}
+
+.section-shell {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  scroll-snap-type: y mandatory;
+}
+
+section,
+.scroll-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
