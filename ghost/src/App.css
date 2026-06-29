@@ -25,10 +25,17 @@ body,
 
 body {
   scroll-snap-type: y mandatory;
+  cursor: crosshair;
 }
 
 section,
 .scroll-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+a,
+button,
+[role="button"] {
+  cursor: crosshair;
 }
