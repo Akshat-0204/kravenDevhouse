@@ -35,6 +35,7 @@ const Ribbons = ({
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
+    const host = container
 
     const renderer = new Renderer({ dpr: window.devicePixelRatio || 2, alpha: true })
     const gl = renderer.gl
@@ -49,7 +50,7 @@ const Ribbons = ({
     gl.canvas.style.left = '0'
     gl.canvas.style.width = '100%'
     gl.canvas.style.height = '100%'
-    container.appendChild(gl.canvas)
+    host.appendChild(gl.canvas)
 
     const scene = new Transform()
     const lines: {
@@ -117,8 +118,8 @@ const Ribbons = ({
     `
 
     function resize() {
-      const width = container.clientWidth
-      const height = container.clientHeight
+      const width = host.clientWidth
+      const height = host.clientHeight
       renderer.setSize(width, height)
       lines.forEach((line) => line.polyline.resize())
     }
@@ -171,8 +172,7 @@ const Ribbons = ({
 
     const mouse = new Vec3()
     function updateMouse(e: MouseEvent | TouchEvent) {
-      if (!container) return
-      const rect = container.getBoundingClientRect()
+      const rect = host.getBoundingClientRect()
       let x = 0
       let y = 0
       if ('changedTouches' in e && e.changedTouches.length) {
@@ -182,8 +182,8 @@ const Ribbons = ({
         x = e.clientX - rect.left
         y = e.clientY - rect.top
       }
-      const width = container.clientWidth
-      const height = container.clientHeight
+      const width = host.clientWidth
+      const height = host.clientHeight
       mouse.set((x / width) * 2 - 1, (y / height) * -2 + 1, 0)
     }
 
@@ -227,12 +227,12 @@ const Ribbons = ({
 
     return () => {
       window.removeEventListener('resize', resize)
-      container.removeEventListener('mousemove', updateMouse)
-      container.removeEventListener('touchstart', updateMouse)
-      container.removeEventListener('touchmove', updateMouse)
+      host.removeEventListener('mousemove', updateMouse)
+      host.removeEventListener('touchstart', updateMouse)
+      host.removeEventListener('touchmove', updateMouse)
       cancelAnimationFrame(frameId)
-      if (gl.canvas && gl.canvas.parentNode === container) {
-        container.removeChild(gl.canvas)
+      if (gl.canvas && gl.canvas.parentNode === host) {
+        host.removeChild(gl.canvas)
       }
     }
   }, [
