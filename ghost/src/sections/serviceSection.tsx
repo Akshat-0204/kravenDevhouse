@@ -7,21 +7,21 @@ const services = [
     title: 'Growth Systems',
     description:
       'Websites and CRM infrastructures that attract, convert and retain customers .',
-    image: '/services/website.jpg',
+    image: '/growthSystemService.png',
   },
   {
     number: '02',
     title: 'Automation systems',
     description:
       'Automate repetitive tasks, connect your tools, and build intelligent systems that save time and increase efficiency.',
-    image: '/services/automation.jpg',
+    image: '/automationSystemsServices.png',
   },
   {
     number: '03',
-    title: 'Intelligent sysytems',
+    title: 'Intelligent Systems',
     description:
       'Custom AI agents and reporting systems that give teams instant answers and actionable insights',
-    image: '/services/crm.jpg',
+    image: '/intelligentSystemServices.png',
   },
  
 ]
