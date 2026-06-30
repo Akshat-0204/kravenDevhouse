@@ -1,6 +1,7 @@
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import './App.css'
 import FooterSection from './sections/footer'
 import HowItWorksSection from './sections/howItWorks'
@@ -9,7 +10,10 @@ import TestimonialSection from './sections/testimonialSection'
 import WhyUsSection from './sections/whyUsSection'
 import WorkWithUsSection from './sections/workWithUs'
 import heroImage from './assets/bgimg.gif'
-import WebDevServicePage from './pages/WebDevServicePage'
+import GrowthSystemsPage from './pages/GrowthSystemsPage'
+import AutomationSystemsPage from './pages/AutomationSystems'
+import IntelligentSystems from './pages/IntelligentSystems'
+import BookCallPage from './pages/BookCallPage'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const navLinks = [
@@ -18,11 +22,10 @@ const navLinks = [
     label: 'Services',
     href: '#services',
     dropdown: [
-      { label: 'Web Development', href: '/services/web-development' },
-      { label: 'AI Automation', href: '/services/ai-automation' },
-      { label: 'CRM Systems', href: '/services/crm-systems' },
-      { label: 'AI Chatbots', href: '/services/ai-chatbots' },
-      { label: 'Custom Software', href: '/services/custom-software' },
+      { label: 'Growth Systems', href: '/services/growth-systems' },
+      { label: 'Automation Systems', href: '/services/automation-systems' },
+      { label: 'Intelligent Systems', href: '/services/intelligent-systems' },
+    
     ],
   },
   { label: 'Why Us', href: '#why-us' },
@@ -84,10 +87,23 @@ function ScrollShell() {
     return match?.label ?? 'Services'
   }, [location.pathname])
   const isServiceRoute = location.pathname.startsWith('/services/')
-  const isWebDevRoute = location.pathname === '/services/web-development'
+  const isGrowthSystemsRoute = location.pathname === '/services/growth-systems'
+  const isAutoationSystemsRoute = location.pathname === '/services/automation-systems'
+  const isIntelligentSystemsRoute = location.pathname === '/services/intelligent-systems'
+  const isBookCallRoute = location.pathname === '/book-a-call'
 
-  if (isWebDevRoute) {
-    return <WebDevServicePage />
+
+  if (isGrowthSystemsRoute) {
+    return <GrowthSystemsPage />
+  }
+  if (isAutoationSystemsRoute) {
+    return <AutomationSystemsPage />
+  }
+  if (isIntelligentSystemsRoute) {
+    return <IntelligentSystems />
+  }
+  if (isBookCallRoute) {
+    return <BookCallPage />
   }
 
   return (
@@ -302,7 +318,10 @@ function ScrollShell() {
                   <p className="mt-5 max-w-md text-sm leading-relaxed text-white/60 md:text-base">
                     Scroll to explore the experience. The navigation condenses into a floating glass shell while the brand mark travels into place.
                   </p>
-                  <button className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#efe4d6] px-6 py-3 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.02]">
+                  <button
+                    onClick={() => navigate('/book-a-call')}
+                    className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#efe4d6] px-6 py-3 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.02]"
+                  >
                     Book a Call
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white">→</span>
                   </button>
@@ -393,6 +412,16 @@ function ServiceDetailPage({ title, description }: { title: string; description:
 export default function App() {
   return (
     <BrowserRouter>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: '#0a0a0a',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.12)',
+          },
+        }}
+      />
       <LayoutGroup>
         <ScrollShell />
       </LayoutGroup>

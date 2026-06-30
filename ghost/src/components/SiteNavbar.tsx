@@ -10,7 +10,7 @@ const navLinks = [
     label: 'Services',
     href: '#services',
     dropdown: [
-      { label: 'Web Development', href: '/services/web-development' },
+      { label: 'Growth Systems', href: '/services/growth-systems' },
       { label: 'AI Automation', href: '/services/ai-automation' },
       { label: 'CRM Systems', href: '/services/crm-systems' },
       { label: 'AI Chatbots', href: '/services/ai-chatbots' },
@@ -138,12 +138,7 @@ export default function SiteNavbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
-              const target = document.querySelector('#cta')
-              if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              } else {
-                navigate('/#contact')
-              }
+              navigate('/book-a-call')
             }}
             className="hidden rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-white/85 transition-colors hover:bg-white/10 lg:inline-flex"
           >

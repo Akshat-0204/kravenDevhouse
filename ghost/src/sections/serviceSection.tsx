@@ -4,32 +4,26 @@ import FeatureTile from '../components/serviceTile'
 const services = [
   {
     number: '01',
-    title: 'Custom Website Development',
+    title: 'Growth Systems',
     description:
-      'Beautiful, fast, and conversion-focused websites engineered to elevate your brand and turn visitors into customers.',
+      'Websites and CRM infrastructures that attract, convert and retain customers .',
     image: '/services/website.jpg',
   },
   {
     number: '02',
-    title: 'AI Workflow Automation',
+    title: 'Automation systems',
     description:
       'Automate repetitive tasks, connect your tools, and build intelligent systems that save time and increase efficiency.',
     image: '/services/automation.jpg',
   },
   {
     number: '03',
-    title: 'CRM & Lead Systems',
+    title: 'Intelligent sysytems',
     description:
-      'Centralize your customer interactions with powerful CRM systems designed to capture, nurture, and convert leads.',
+      'Custom AI agents and reporting systems that give teams instant answers and actionable insights',
     image: '/services/crm.jpg',
   },
-  {
-    number: '04',
-    title: 'AI Agents & Chatbots',
-    description:
-      'Deploy intelligent AI assistants that engage customers, answer questions, and book appointments 24/7.',
-    image: '/services/chatbot.jpg',
-  },
+ 
 ]
 
 const ServicesSection = () => {
