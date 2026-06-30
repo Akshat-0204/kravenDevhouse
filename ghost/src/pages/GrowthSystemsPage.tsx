@@ -35,35 +35,35 @@ const deliverySteps = [
     title: 'Discover',
     description:
       'We dive deep into your business, customer journey, and existing systems to uncover opportunities, bottlenecks, and growth gaps.',
-    image: heroImage,
+    image: '/growth/discover.png',
   },
   {
     number: '02',
     title: 'Strategize',
     description:
       'We map the ideal customer flow, define success metrics, and architect a solution tailored to how your business actually operates.',
-    image: altImage,
+    image: '/growth/strategize.png',
   },
   {
     number: '03',
     title: 'Design',
     description:
       'From user experience to system architecture, we design every touchpoint to create clarity, trust, and seamless customer interactions.',
-    image: heroImage,
+    image: '/growth/design.png',
   },
   {
     number: '04',
     title: 'Build and Test',
     description:
       "We develop, integrate, and rigorously test the solution , whether it's a website, CRM, or lead capture system , ensuring everything works together flawlessly",
-    image: altImage,
+    image: '/growth/buildAndTest.png',
   },
   {
     number: '05',
     title: 'Launch & Optimize',
     description:
       'After launch, we monitor performance, refine workflows, and continuously optimize so your systems keep improving as your business grows.',
-    image: heroImage,
+    image: '/growth/LaunchAndOptimize.png',
   },
 ]
 
