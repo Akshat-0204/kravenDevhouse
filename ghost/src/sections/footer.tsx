@@ -74,15 +74,7 @@ const FooterSection = () => {
               </button>
             </li>
 
-            <li>
-              <button
-                type="button"
-                onClick={() => scrollToSection(navigate, 'services')}
-                className="cursor-pointer hover:text-white"
-              >
-                Case Studies
-              </button>
-            </li>
+            
 
             <li>
               <button
