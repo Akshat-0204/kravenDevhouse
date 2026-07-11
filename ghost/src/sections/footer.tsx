@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { scrollToSection } from '../utils/scrollToSection'
 
 // components/FooterSection.tsx
 
 const FooterSection = () => {
+  const navigate = useNavigate()
+
   return (
     <footer className="border-t border-zinc-900 bg-[#080808] px-8 py-20">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
@@ -32,16 +35,22 @@ const FooterSection = () => {
           </h4>
 
           <ul className="space-y-5 text-zinc-400">
-            <li className="cursor-pointer hover:text-white">
-              Web Development
+            <li>
+              <Link to="/services/growth-systems" className="cursor-pointer hover:text-white">
+                Growth Systems
+              </Link>
             </li>
 
-            <li className="cursor-pointer hover:text-white">
-              AI Automations
+            <li>
+              <Link to="/services/automation-systems" className="cursor-pointer hover:text-white">
+                Automation Systems
+              </Link>
             </li>
 
-            <li className="cursor-pointer hover:text-white">
-              CRM Systems
+            <li>
+              <Link to="/services/intelligent-systems" className="cursor-pointer hover:text-white">
+                Intelligent Systems
+              </Link>
             </li>
 
             
@@ -55,10 +64,34 @@ const FooterSection = () => {
           </h4>
 
           <ul className="space-y-5 text-zinc-400">
-          
+            <li>
+              <button
+                type="button"
+                onClick={() => scrollToSection(navigate, 'contact')}
+                className="cursor-pointer hover:text-white"
+              >
+                Contact
+              </button>
+            </li>
 
-            <li className="cursor-pointer hover:text-white">
-              Contact
+            <li>
+              <button
+                type="button"
+                onClick={() => scrollToSection(navigate, 'services')}
+                className="cursor-pointer hover:text-white"
+              >
+                Case Studies
+              </button>
+            </li>
+
+            <li>
+              <button
+                type="button"
+                onClick={() => scrollToSection(navigate, 'how-it-works')}
+                className="cursor-pointer hover:text-white"
+              >
+                Blog
+              </button>
             </li>
 
            
