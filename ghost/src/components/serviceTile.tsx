@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 interface FeatureTileProps {
   number: string
   title: string
   description: string
   image: string
+  href: string
   delay?: number
 }
 
-const FeatureTile = ({ number, title, description, image, delay = 0 }: FeatureTileProps) => {
+const FeatureTile = ({ number, title, description, image, href, delay = 0 }: FeatureTileProps) => {
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
@@ -34,10 +36,13 @@ const FeatureTile = ({ number, title, description, image, delay = 0 }: FeatureTi
             {description}
           </p>
 
-          <button className="mt-4 inline-flex w-fit items-center gap-2 text-[0.7rem] font-medium tracking-[0.18em] text-[#efe4d6] transition-transform duration-300 group-hover:translate-x-1">
+          <Link
+            to={href}
+            className="mt-4 inline-flex w-fit items-center gap-2 text-[0.7rem] font-medium tracking-[0.18em] text-[#efe4d6] transition-transform duration-300 group-hover:translate-x-1"
+          >
             Explore
             <span className="text-white/40 transition-colors group-hover:text-white">→</span>
-          </button>
+          </Link>
         </div>
 
         <div className="relative">

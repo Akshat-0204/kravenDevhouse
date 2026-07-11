@@ -1,6 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Link, useLocation, useNavigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import './App.css'
 import FooterSection from './sections/footer'
@@ -9,11 +9,14 @@ import ServicesSection from './sections/serviceSection'
 import TestimonialSection from './sections/testimonialSection'
 import WhyUsSection from './sections/whyUsSection'
 import WorkWithUsSection from './sections/workWithUs'
-import heroImage from './assets/bgimg.gif'
+import { SparkleParticles } from './components/SparkleParticles'
+import { scrollToSection } from './utils/scrollToSection'
 import GrowthSystemsPage from './pages/GrowthSystemsPage'
 import AutomationSystemsPage from './pages/AutomationSystems'
 import IntelligentSystems from './pages/IntelligentSystems'
 import BookCallPage from './pages/BookCallPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import TermsOfServicePage from './pages/TermsOfServicePage'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const navLinks = [
@@ -25,10 +28,8 @@ const navLinks = [
       { label: 'Growth Systems', href: '/services/growth-systems' },
       { label: 'Automation Systems', href: '/services/automation-systems' },
       { label: 'Intelligent Systems', href: '/services/intelligent-systems' },
-    
     ],
   },
-  { label: 'Why Us', href: '#why-us' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
@@ -91,6 +92,8 @@ function ScrollShell() {
   const isAutoationSystemsRoute = location.pathname === '/services/automation-systems'
   const isIntelligentSystemsRoute = location.pathname === '/services/intelligent-systems'
   const isBookCallRoute = location.pathname === '/book-a-call'
+  const isPrivacyPolicyRoute = location.pathname === '/privacy-policy'
+  const isTermsOfServiceRoute = location.pathname === '/terms-of-service'
 
 
   if (isGrowthSystemsRoute) {
@@ -105,6 +108,12 @@ function ScrollShell() {
   if (isBookCallRoute) {
     return <BookCallPage />
   }
+  if (isPrivacyPolicyRoute) {
+    return <PrivacyPolicyPage />
+  }
+  if (isTermsOfServiceRoute) {
+    return <TermsOfServicePage />
+  }
 
   return (
     <div className="bg-black text-white">
@@ -118,10 +127,10 @@ function ScrollShell() {
             className="fixed left-1/2 top-4 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-[1.5rem] border border-white/10 bg-white/8 px-4 py-3 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl md:top-5"
           >
             <div className="flex items-center justify-between gap-4">
-              <button
-                onClick={() => navigate('/')}
-                className="group flex items-center gap-3 text-left"
-              >
+                <button
+                  onClick={() => navigate('/')}
+                  className="group flex items-center gap-3 text-left"
+                >
                 <motion.span
                   layoutId="kraven-logo"
                   className="text-xl font-semibold tracking-[0.18em]  text-[#efe7db] md:text-2xl tracking-tight"
@@ -171,14 +180,16 @@ function ScrollShell() {
                       </AnimatePresence>
                     </div>
                   ) : (
-                    <button
-                      key={link.label}
-                      onClick={() => {
-                        if (link.href.startsWith('#')) {
-                          document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                        } else {
-                          navigate(link.href)
-                        }
+                      <button
+                        key={link.label}
+                        onClick={() => {
+                          if (link.href === '/') {
+                            scrollToSection(navigate, 'top')
+                          } else if (link.href.startsWith('#')) {
+                            scrollToSection(navigate, link.href.slice(1))
+                          } else {
+                            navigate(link.href)
+                          }
                       }}
                       className="rounded-full px-4 py-2 text-sm text-white/72 transition-colors hover:bg-white/8 hover:text-white"
                     >
@@ -265,29 +276,80 @@ function ScrollShell() {
               </button>
 
               <nav className="hidden items-center gap-2 lg:flex">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.label}
-                    onClick={() => {
-                      if (link.href.startsWith('#')) {
-                        document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                      } else {
-                        navigate(link.href)
-                      }
-                    }}
-                    className="rounded-full px-4 py-2 text-sm text-white/70 transition-colors hover:bg-white/8 hover:text-white"
-                  >
-                    {link.label}
-                  </button>
-                ))}
+                {navLinks.map((link) =>
+                  link.dropdown ? (
+                    <div
+                      key={link.label}
+                      className="relative"
+                      onMouseEnter={() => isDesktop && setServicesOpen(true)}
+                      onMouseLeave={() => isDesktop && setServicesOpen(false)}
+                    >
+                      <button
+                        onClick={() => setServicesOpen((open) => !open)}
+                        className="rounded-full px-4 py-2 text-sm text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                      >
+                        {link.label}
+                      </button>
+                      <AnimatePresence>
+                        {servicesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.98, filter: 'blur(10px)' }}
+                            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                            exit={{ opacity: 0, y: 10, scale: 0.98, filter: 'blur(10px)' }}
+                            transition={{ duration: 0.25, ease }}
+                            className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-[1.25rem] border border-white/10 bg-[#0e0e0f]/90 p-2 shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
+                          >
+                            {link.dropdown.map((item) => (
+                            <button
+                              key={item.href}
+                              onClick={() => navigate(item.href)}
+                              className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                              >
+                                <span>{item.label}</span>
+                                <span className="text-white/25">↗</span>
+                              </button>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                      <button
+                        key={link.label}
+                        onClick={() => {
+                          if (link.href === '/') {
+                            scrollToSection(navigate, 'top')
+                          } else if (link.href.startsWith('#')) {
+                            scrollToSection(navigate, link.href.slice(1))
+                          } else {
+                            navigate(link.href)
+                          }
+                      }}
+                      className="rounded-full px-4 py-2 text-sm text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                    >
+                      {link.label}
+                    </button>
+                  ),
+                )}
               </nav>
             </div>
           </header>
 
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${heroImage})` }}
-          />
+          <div className="absolute inset-0">
+            <SparkleParticles
+              className="absolute inset-0 h-full w-full"
+              particleColor="#f0e6d6"
+              backgroundColor="transparent"
+              baseDensity={220}
+              particleCount={3}
+              maxParticleSize={1.8}
+              maxSpeed={0.6}
+              opacityAnimationSpeed={1.4}
+              enableHoverGrab
+              enableParallax
+              zIndexLevel={0}
+            />
+          </div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.07),transparent_32%),linear-gradient(to_bottom,rgba(0,0,0,0.35),rgba(0,0,0,0.82)_78%)]" />
           <div className="relative z-10 flex min-h-screen flex-col px-6 py-5 md:px-10 md:py-8">
             <div className="flex flex-1 items-end pb-16 md:pb-12">
@@ -306,25 +368,24 @@ function ScrollShell() {
                     devhouse
                   </h3>
                   <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-                    We design cinematic websites, automate operations, and build premium AI systems for teams that want to move faster without losing polish.
+                        We build websites people trust, automate work that slows teams down, and engineer AI systems that quietly become your competitive advantage.
                   </p>
                 </div>
 
                 <div className="max-w-lg justify-self-start lg:justify-self-end">
-                  <p className="text-sm uppercase tracking-[0.35em] text-white">Build. Automate. Scale.</p>
+                  <p className="text-lg uppercase tracking-[0.35em] text-white">Build. Automate. Scale.</p>
                   <h2 className="mt-5 text-3xl font-medium tracking-[-0.05em] text-orange-200 md:text-5xl">
-                    A black-on-black digital studio with a quieter kind of confidence.
+                    Build Beyond Ordinary.
                   </h2>
                   <p className="mt-5 max-w-md text-sm leading-relaxed text-white/60 md:text-base">
-                    Scroll to explore the experience. The navigation condenses into a floating glass shell while the brand mark travels into place.
-                  </p>
-                  <button
-                    onClick={() => navigate('/book-a-call')}
+                      Explore how modern businesses are built, from first click to intelligent systems.                  </p>
+                  <Link
+                    to="/book-a-call"
                     className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#efe4d6] px-6 py-3 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.02]"
                   >
                     Book a Call
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white">→</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import FooterSection from '../sections/footer'
 import SiteNavbar from '../components/SiteNavbar'
 import Threads from '../components/Threads'
-import heroImage from '../assets/bgimg.gif'
-import altImage from '../assets/hero.png'
+
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -13,19 +12,19 @@ const systems = [
     title: 'AI Appointment Booking',
     description:
       'Your calendar should fill itself. We build AI assistants that qualify, schedule, and follow up—around the clock.',
-    image: heroImage,
+    image: '/subServices/AiAppointment.avif',
   },
   {
     title: 'Client Onboarding',
     description:
       'First impressions set the tone. We automate onboarding so every new client experiences speed, clarity, and zero friction.',
-    image: altImage,
+    image: '/subServices/clientOnboarding.avif',
   },
   {
     title: 'Workflow Automations',
     description:
       'Busywork is expensive. We design intelligent workflows that quietly handle repetitive operations while your team focuses on work that matters.',
-    image: heroImage,
+    image: '/subServices/workflowAutomations.avif',
   },
 ]
 
@@ -35,35 +34,35 @@ const deliverySteps = [
     title: 'Audit',
     description:
       'We map your existing workflows, identify bottlenecks, and uncover where time, revenue, and opportunities are being lost.',
-    image: heroImage,
+    image: '/automationSystems/audit.avif',
   },
   {
     number: '02',
     title: 'Architect',
     description:
       'We design the ideal automation flow, defining how people, processes, and systems should interact.',
-    image: altImage,
+    image: '/automationSystems/architect.avif',
   },
   {
     number: '03',
     title: 'Integrate',
     description:
       'We connect the tools your business already relies on — CRMs, calendars, communication platforms, and internal systems.',
-    image: heroImage,
+    image: '/automationSystems/integrate.avif',
   },
   {
     number: '04',
     title: 'Automate',
     description:
       "We build, test, and deploy intelligent automations that handle repetitive work with speed and precision.",
-    image: altImage,
+    image: '/automationSystems/automate.avif',
   },
   {
     number: '05',
     title: 'Refine',
     description:
       'Once live, we monitor performance, optimize workflows, and continuously improve the system as your business evolves.',
-    image: heroImage,
+    image: '/automationSystems/refine.avif',
   },
 ]
 

@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import FooterSection from '../sections/footer'
 import SiteNavbar from '../components/SiteNavbar'
 import Threads from '../components/Threads'
-import heroImage from '../assets/bgimg.gif'
-import altImage from '../assets/hero.png'
+
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -13,19 +12,19 @@ const systems = [
     title: 'Websites',
     description:
       'Conversion-first builds with clean structure, fast load times, and a premium feel that makes the offer easier to trust.',
-    image: heroImage,
+    image: '/subServices/websites.avif',
   },
   {
     title: 'CRM',
     description:
       'A simple source of truth for leads, pipelines, and follow-up so the team never loses momentum once interest shows up.',
-    image: altImage,
+    image: '/subServices/CRM.avif',
   },
   {
     title: 'Lead Capture',
     description:
       'Forms, flows, and routing that catch demand early and turn anonymous traffic into qualified conversations.',
-    image: heroImage,
+    image: '/subServices/leadCapture.avif',
   },
 ]
 
@@ -35,35 +34,35 @@ const deliverySteps = [
     title: 'Discover',
     description:
       'We dive deep into your business, customer journey, and existing systems to uncover opportunities, bottlenecks, and growth gaps.',
-    image: '/growth/discover.png',
+    image: '/growth/discover.avif',
   },
   {
     number: '02',
     title: 'Strategize',
     description:
       'We map the ideal customer flow, define success metrics, and architect a solution tailored to how your business actually operates.',
-    image: '/growth/strategize.png',
+    image: '/growth/strategize.avif',
   },
   {
     number: '03',
     title: 'Design',
     description:
       'From user experience to system architecture, we design every touchpoint to create clarity, trust, and seamless customer interactions.',
-    image: '/growth/design.png',
+    image: '/growth/design.avif',
   },
   {
     number: '04',
     title: 'Build and Test',
     description:
       "We develop, integrate, and rigorously test the solution , whether it's a website, CRM, or lead capture system , ensuring everything works together flawlessly",
-    image: '/growth/buildAndTest.png',
+    image: '/growth/buildAndTest.avif',
   },
   {
     number: '05',
     title: 'Launch & Optimize',
     description:
       'After launch, we monitor performance, refine workflows, and continuously optimize so your systems keep improving as your business grows.',
-    image: '/growth/LaunchAndOptimize.png',
+    image: '/growth/LaunchAndOptimize.avif',
   },
 ]
 

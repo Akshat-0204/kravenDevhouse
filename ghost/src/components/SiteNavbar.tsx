@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { scrollToSection } from '../utils/scrollToSection'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -11,13 +12,10 @@ const navLinks = [
     href: '#services',
     dropdown: [
       { label: 'Growth Systems', href: '/services/growth-systems' },
-      { label: 'AI Automation', href: '/services/ai-automation' },
-      { label: 'CRM Systems', href: '/services/crm-systems' },
-      { label: 'AI Chatbots', href: '/services/ai-chatbots' },
-      { label: 'Custom Software', href: '/services/custom-software' },
+      { label: 'Automation Systems', href: '/services/automation-systems' },
+      { label: 'Intelligent Systems', href: '/services/intelligent-systems' },
     ],
   },
-  { label: 'Why Us', href: '#why-us' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
@@ -121,8 +119,10 @@ export default function SiteNavbar() {
               <button
                 key={link.label}
                 onClick={() => {
-                  if (link.href.startsWith('#')) {
-                    document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  if (link.href === '/') {
+                    scrollToSection(navigate, 'top')
+                  } else if (link.href.startsWith('#')) {
+                    scrollToSection(navigate, link.href.slice(1))
                   } else {
                     navigate(link.href)
                   }
@@ -136,14 +136,12 @@ export default function SiteNavbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => {
-              navigate('/book-a-call')
-            }}
+          <Link
+            to="/book-a-call"
             className="hidden rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-white/85 transition-colors hover:bg-white/10 lg:inline-flex"
           >
             Book a Call
-          </button>
+          </Link>
 
           <div className="relative lg:hidden">
             <button
@@ -173,8 +171,10 @@ export default function SiteNavbar() {
                       <button
                         key={link.label}
                         onClick={() => {
-                          if (link.href.startsWith('#')) {
-                            document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                          if (link.href === '/') {
+                            scrollToSection(navigate, 'top')
+                          } else if (link.href.startsWith('#')) {
+                            scrollToSection(navigate, link.href.slice(1))
                           } else {
                             navigate(link.href)
                           }

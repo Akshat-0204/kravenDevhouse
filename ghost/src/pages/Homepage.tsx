@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 // HomePage.tsx
 
 const HomePage = () => {
@@ -65,13 +67,13 @@ const HomePage = () => {
       automations for ambitious businesses.
     </p>
 
-    <button className="mt-8 flex items-center gap-4 rounded-full bg-[#D8C3A5] px-7 py-3 text-black font-semibold tracking-tight transition-transform hover:scale-[1.02]">
+    <Link to="/book-a-call" className="mt-8 flex items-center gap-4 rounded-full bg-[#D8C3A5] px-7 py-3 text-black font-semibold tracking-tight transition-transform hover:scale-[1.02]">
       <span>Book a Call</span>
 
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white">
         →
       </span>
-    </button>
+    </Link>
   </div>
 </section>
     </div>

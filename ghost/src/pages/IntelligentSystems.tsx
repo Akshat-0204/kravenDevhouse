@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import FooterSection from '../sections/footer'
 import SiteNavbar from '../components/SiteNavbar'
 import Threads from '../components/Threads'
-import heroImage from '../assets/bgimg.gif'
-import altImage from '../assets/hero.png'
+
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -13,19 +12,19 @@ const systems = [
     title: 'AI Agents',
     description:
       'Give your team an always-on digital teammate that answers questions, retrieves knowledge, and gets work done in seconds—not hours.',
-    image: heroImage,
+    image: '/subServices/AiAgents.avif',
   },
   {
     title: 'Reporting',
     description:
       'Stop chasing spreadsheets. We build reporting systems that surface the numbers that matter, exactly when you need them.',
-    image: altImage,
+    image: '/subServices/reporting.avif',
   },
   {
     title: 'Business Intelligence',
     description:
       'Turn scattered business data into clear decisions with intelligence systems that reveal patterns, opportunities, and risks before they become obvious.',
-    image: heroImage,
+    image: '/subServices/businessIntelligence.avif',
   },
 ]
 
@@ -35,35 +34,35 @@ const deliverySteps = [
     title: 'Discover',
     description:
       'We immerse ourselves in your business to understand how information flows, where decisions are made, and where critical knowledge gets lost.',
-    image: heroImage,
+    image: '/intelligentSystems/discover.avif',
   },
   {
     number: '02',
     title: 'Model',
     description:
       'We identify the data sources, workflows, and business logic required to turn raw information into usable intelligence.',
-    image: altImage,
+    image: '/intelligentSystems/model.avif',
   },
   {
     number: '03',
     title: 'Engineer',
     description:
       'We design and build the underlying intelligence layer—connecting systems, structuring knowledge, and developing the required agents and reporting pipelines.',
-    image: heroImage,
+    image: '/intelligentSystems/engineer.avif',
   },
   {
     number: '04',
     title: 'Validate',
     description:
       "Every output is rigorously tested for accuracy, reliability, and relevance to ensure the system can be trusted in real-world operations.",
-    image: altImage,
+    image: '/intelligentSystems/validate.avif',
   },
   {
     number: '05',
     title: 'Evolve',
     description:
       'Intelligence compounds over time. We continuously refine models, improve outputs, and adapt the system as your business grows.',
-    image: heroImage,
+    image: '/intelligentSystems/evolve.avif',
   },
 ]
 

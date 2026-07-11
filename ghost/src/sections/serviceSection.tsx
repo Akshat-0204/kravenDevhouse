@@ -8,6 +8,7 @@ const services = [
     description:
       'Websites and CRM infrastructures that attract, convert and retain customers .',
     image: '/growthSystemService.png',
+    href: '/services/growth-systems',
   },
   {
     number: '02',
@@ -15,6 +16,7 @@ const services = [
     description:
       'Automate repetitive tasks, connect your tools, and build intelligent systems that save time and increase efficiency.',
     image: '/automationSystemsServices.png',
+    href: '/services/automation-systems',
   },
   {
     number: '03',
@@ -22,6 +24,7 @@ const services = [
     description:
       'Custom AI agents and reporting systems that give teams instant answers and actionable insights',
     image: '/intelligentSystemServices.png',
+    href: '/services/intelligent-systems',
   },
  
 ]
@@ -62,6 +65,7 @@ const ServicesSection = () => {
               title={service.title}
               description={service.description}
               image={service.image}
+              href={service.href}
               delay={index * 0.08}
             />
           ))}

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 // components/FooterSection.tsx
 
 const FooterSection = () => {
@@ -42,9 +44,7 @@ const FooterSection = () => {
               CRM Systems
             </li>
 
-            <li className="cursor-pointer hover:text-white">
-              AI Chatbots
-            </li>
+            
           </ul>
         </div>
 
@@ -55,17 +55,13 @@ const FooterSection = () => {
           </h4>
 
           <ul className="space-y-5 text-zinc-400">
-            <li className="cursor-pointer hover:text-white">
-              Case Studies
-            </li>
+          
 
             <li className="cursor-pointer hover:text-white">
               Contact
             </li>
 
-            <li className="cursor-pointer hover:text-white">
-              Blog
-            </li>
+           
           </ul>
         </div>
 
@@ -84,9 +80,7 @@ const FooterSection = () => {
               X
             </li>
 
-            <li className="cursor-pointer hover:text-white">
-              Instagram
-            </li>
+            
           </ul>
         </div>
       </div>
@@ -97,13 +91,13 @@ const FooterSection = () => {
           <p>© 2026 Kraven. All rights reserved.</p>
 
           <div className="flex gap-8">
-            <span className="cursor-pointer hover:text-zinc-400">
+            <Link to="/privacy-policy" className="cursor-pointer hover:text-zinc-400">
               Privacy Policy
-            </span>
+            </Link>
 
-            <span className="cursor-pointer hover:text-zinc-400">
+            <Link to="/terms-of-service" className="cursor-pointer hover:text-zinc-400">
               Terms of Service
-            </span>
+            </Link>
           </div>
         </div>
       </div>
