@@ -15,7 +15,7 @@ const WhyUsCard = ({ stat, title, description, delay = 0 }: WhyUsCardProps) => {
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
       whileHover={{ y: -4 }}
-      className="group relative overflow-hidden rounded-[1.65rem] border border-white/10 bg-white/4 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl"
+      className="group relative overflow-hidden rounded-[1.65rem] border border-white/10 bg-white/4 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl md:p-5"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_35%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="relative">
@@ -26,11 +26,11 @@ const WhyUsCard = ({ stat, title, description, delay = 0 }: WhyUsCardProps) => {
           <span className="h-px w-10 bg-white/15 transition-all duration-500 group-hover:w-16 group-hover:bg-[#efe4d6]" />
         </div>
 
-        <h3 className="mt-6 text-xl font-medium tracking-[-0.04em] text-white md:text-2xl">
+        <h3 className="mt-3 text-lg font-medium tracking-[-0.04em] text-white md:text-xl">
           {title}
         </h3>
 
-        <p className="mt-4 text-sm leading-relaxed text-white/60 md:text-[0.95rem]">
+        <p className="mt-2 text-xs leading-relaxed text-white/60 md:text-sm">
           {description}
         </p>
       </div>

@@ -1,11 +1,32 @@
 import { Link } from 'react-router-dom'
+import HyperspaceJump from '../components/HyperspaceJump'
+import { useSectionVisible } from '../hooks/useSectionVisible'
 
 // components/WorkWithUsSection.tsx
 
 const WorkWithUsSection = () => {
+  const { ref, isVisible } = useSectionVisible<HTMLElement>()
+
   return (
-    <section className="bg-black px-8 py-32">
-      <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
+    <section
+      ref={ref}
+      id="contact"
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-black px-8 py-24"
+    >
+      <div className="absolute inset-0">
+        {isVisible && (
+          <>
+            <HyperspaceJump className="absolute inset-0 h-full w-full" />
+            <div
+              key="jump-flash"
+              className="hyperspace-flash pointer-events-none absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(239,228,214,0.9),transparent_70%)]"
+            />
+          </>
+        )}
+      </div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.1),rgba(0,0,0,0.72))]" />
+
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
         <span className="text-xs uppercase tracking-[0.45em] text-white/35">
           Work With Us
         </span>

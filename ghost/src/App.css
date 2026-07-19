@@ -29,7 +29,8 @@ body {
 }
 
 section,
-.scroll-section {
+.scroll-section,
+footer {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
@@ -38,4 +39,54 @@ a,
 button,
 [role="button"] {
   cursor: crosshair;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(6%, -8%) scale(1.15);
+  }
+  66% {
+    transform: translate(-8%, 6%) scale(0.92);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.aurora-blob {
+  animation-name: aurora-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob {
+    animation: none;
+  }
+}
+
+@keyframes hyperspace-flash {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+.hyperspace-flash {
+  animation: hyperspace-flash 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hyperspace-flash {
+    animation: none;
+    opacity: 0;
+  }
 }

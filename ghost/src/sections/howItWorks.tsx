@@ -8,7 +8,8 @@ const HowItWorksSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen w-full overflow-hidden bg-black px-6 py-24 md:px-8"
+      id="how-it-works"
+      className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden bg-black px-6 py-24 md:px-8"
     >
       <div className="absolute inset-0 opacity-55">
         {isVisible && <Threads amplitude={1} distance={0} enableMouseInteraction />}

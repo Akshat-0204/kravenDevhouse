@@ -6,7 +6,7 @@ import './App.css'
 import FooterSection from './sections/footer'
 import HowItWorksSection from './sections/howItWorks'
 import ServicesSection from './sections/serviceSection'
-import TestimonialSection from './sections/testimonialSection'
+// import TestimonialSection from './sections/testimonialSection'
 import WhyUsSection from './sections/whyUsSection'
 import WorkWithUsSection from './sections/workWithUs'
 import { SparkleParticles } from './components/SparkleParticles'
@@ -14,6 +14,7 @@ import { scrollToSection } from './utils/scrollToSection'
 import GrowthSystemsPage from './pages/GrowthSystemsPage'
 import AutomationSystemsPage from './pages/AutomationSystems'
 import IntelligentSystems from './pages/IntelligentSystems'
+import SoftwareSolutionsPage from './pages/SoftwareSolutions'
 import BookCallPage from './pages/BookCallPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import TermsOfServicePage from './pages/TermsOfServicePage'
@@ -28,10 +29,11 @@ const navLinks = [
       { label: 'Growth Systems', href: '/services/growth-systems' },
       { label: 'Automation Systems', href: '/services/automation-systems' },
       { label: 'Intelligent Systems', href: '/services/intelligent-systems' },
+      { label: 'Software Solutions', href: '/services/software-solutions' },
     ],
   },
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Testimonials', href: '#testimonials' },
+  // { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -55,6 +57,7 @@ function ScrollShell() {
   const [navVisible, setNavVisible] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
+  const [transitionNonce, setTransitionNonce] = useState(0)
   const isDesktop = useIsDesktop()
   const { scrollY } = useScroll()
   const location = useLocation()
@@ -76,6 +79,139 @@ function ScrollShell() {
   useEffect(() => {
     setMenuOpen(false)
     setServicesOpen(false)
+    if (location.pathname !== '/') {
+      window.scrollTo(0, 0)
+    }
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (location.pathname !== '/') return
+
+    const slideIds = ['how-it-works', 'services', 'why-us', 'contact']
+
+    const getCurrentIndex = () => {
+      const y = window.scrollY
+      if (y < window.innerHeight * 0.5) return -1
+      const footerEl = document.querySelector('footer')
+      if (footerEl && footerEl.getBoundingClientRect().top <= 10) {
+        return slideIds.length
+      }
+      let current = -1
+      slideIds.forEach((id, idx) => {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= 10) {
+          current = idx
+        }
+      })
+      return current
+    }
+
+    const easeInOutQuint = (t: number) =>
+      t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2
+
+    const transitionDuration = 1300
+
+    const animateScrollTo = (targetY: number) => {
+      const clampedTarget = Math.max(
+        0,
+        Math.min(targetY, document.documentElement.scrollHeight - window.innerHeight),
+      )
+      const startY = window.scrollY
+      const distance = clampedTarget - startY
+      if (Math.abs(distance) < 1) return
+
+      const body = document.body
+      const previousSnapType = body.style.scrollSnapType
+      body.style.scrollSnapType = 'none'
+
+      const startTime = performance.now()
+
+      const step = (now: number) => {
+        const elapsed = now - startTime
+        const t = Math.min(1, elapsed / transitionDuration)
+        window.scrollTo({ top: startY + distance * easeInOutQuint(t), behavior: 'instant' as ScrollBehavior })
+        if (t < 1) {
+          requestAnimationFrame(step)
+        } else {
+          body.style.scrollSnapType = previousSnapType
+        }
+      }
+
+      requestAnimationFrame(step)
+    }
+
+    const scrollToIndex = (idx: number) => {
+      if (idx < 0) {
+        animateScrollTo(0)
+        return
+      }
+      if (idx >= slideIds.length) {
+        const footerEl = document.querySelector('footer')
+        if (footerEl) animateScrollTo(footerEl.getBoundingClientRect().top + window.scrollY)
+        return
+      }
+      const el = document.getElementById(slideIds[idx])
+      if (el) animateScrollTo(el.getBoundingClientRect().top + window.scrollY)
+    }
+
+    let isAnimating = false
+    const unlockDelay = transitionDuration + 150
+
+    const goTo = (delta: number) => {
+      if (isAnimating) return
+      isAnimating = true
+      setTransitionNonce((n) => n + 1)
+      scrollToIndex(getCurrentIndex() + delta)
+      window.setTimeout(() => {
+        isAnimating = false
+      }, unlockDelay)
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+        return
+      }
+
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        event.preventDefault()
+        goTo(1)
+      } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        event.preventDefault()
+        goTo(-1)
+      }
+    }
+
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault()
+      if (Math.abs(event.deltaY) < 4) return
+      goTo(event.deltaY > 0 ? 1 : -1)
+    }
+
+    let touchStartY = 0
+
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0
+    }
+
+    const onTouchEnd = (event: TouchEvent) => {
+      const endY = event.changedTouches[0]?.clientY ?? touchStartY
+      const delta = touchStartY - endY
+      if (Math.abs(delta) < 40) return
+      goTo(delta > 0 ? 1 : -1)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('wheel', onWheel, { passive: false })
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchend', onTouchEnd, { passive: true })
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('wheel', onWheel)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchend', onTouchEnd)
+    }
   }, [location.pathname])
 
   const titleScale = useTransform(scrollY, [0, Math.max(heroHeight * 0.55, 1)], [1, 0.34])
@@ -91,6 +227,7 @@ function ScrollShell() {
   const isGrowthSystemsRoute = location.pathname === '/services/growth-systems'
   const isAutoationSystemsRoute = location.pathname === '/services/automation-systems'
   const isIntelligentSystemsRoute = location.pathname === '/services/intelligent-systems'
+  const isSoftwareSolutionsRoute = location.pathname === '/services/software-solutions'
   const isBookCallRoute = location.pathname === '/book-a-call'
   const isPrivacyPolicyRoute = location.pathname === '/privacy-policy'
   const isTermsOfServiceRoute = location.pathname === '/terms-of-service'
@@ -105,6 +242,9 @@ function ScrollShell() {
   if (isIntelligentSystemsRoute) {
     return <IntelligentSystems />
   }
+  if (isSoftwareSolutionsRoute) {
+    return <SoftwareSolutionsPage />
+  }
   if (isBookCallRoute) {
     return <BookCallPage />
   }
@@ -117,6 +257,15 @@ function ScrollShell() {
 
   return (
     <div className="bg-black text-white">
+      {transitionNonce > 0 && (
+        <motion.div
+          key={transitionNonce}
+          className="pointer-events-none fixed inset-0 z-[70] bg-black"
+          initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+          animate={{ opacity: [0, 0.38, 0], backdropFilter: ['blur(0px)', 'blur(10px)', 'blur(0px)'] }}
+          transition={{ duration: 1.3, times: [0, 0.45, 1], ease: [0.22, 1, 0.36, 1] }}
+        />
+      )}
       <AnimatePresence>
         {navVisible && (
           <motion.header
@@ -128,7 +277,7 @@ function ScrollShell() {
           >
             <div className="flex items-center justify-between gap-4">
                 <button
-                  onClick={() => navigate('/')}
+                  onClick={() => scrollToSection(navigate, 'top')}
                   className="group flex items-center gap-3 text-left"
                 >
                 <motion.span
@@ -262,7 +411,7 @@ function ScrollShell() {
           <section ref={heroRef} className="relative min-h-screen overflow-hidden bg-black">
           <header className="relative z-20 px-6 pt-5 md:px-10 md:pt-8">
             <div className="flex items-center justify-between gap-4">
-              <button onClick={() => navigate('/')} className="flex items-center gap-3 text-left">
+              <button onClick={() => scrollToSection(navigate, 'top')} className="flex items-center gap-3 text-left">
                 <motion.span
                   layoutId="kraven-logo"
                   className="text-lg font-semibold tracking-[0.16em] text-[#efe7db] md:text-xl"
@@ -368,7 +517,7 @@ function ScrollShell() {
                     devhouse
                   </h3>
                   <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-                        We build websites people trust, automate work that slows teams down, and engineer AI systems that quietly become your competitive advantage.
+                        We build software people trust — from custom websites and frontend engineering to workflow automation and AI systems that quietly become your competitive advantage.
                   </p>
                 </div>
 
@@ -392,40 +541,32 @@ function ScrollShell() {
           </div>
         </section>
 
-        <div className="scroll-section snap-start snap-always" id="how-it-works">
-          <SectionMotion>
-            <HowItWorksSection />
-          </SectionMotion>
-        </div>
+        <SectionMotion>
+          <HowItWorksSection />
+        </SectionMotion>
 
+        {/* Testimonials temporarily disabled
         <div className="scroll-section snap-start snap-always" id="testimonials">
           <SectionMotion>
             <TestimonialSection />
           </SectionMotion>
         </div>
-
-        <div className="scroll-section snap-start snap-always" id="services">
-          <SectionMotion>
-            <ServicesSection />
-          </SectionMotion>
-        </div>
-
-        <div className="scroll-section snap-start snap-always" id="why-us">
-          <SectionMotion>
-            <WhyUsSection />
-          </SectionMotion>
-        </div>
-
-        <div className="scroll-section snap-start snap-always" id="contact">
-          <SectionMotion>
-            <WorkWithUsSection />
-          </SectionMotion>
-        </div>
+        */}
 
         <SectionMotion>
-          <div className="scroll-section snap-start snap-always">
-            <FooterSection />
-          </div>
+          <ServicesSection />
+        </SectionMotion>
+
+        <SectionMotion>
+          <WhyUsSection />
+        </SectionMotion>
+
+        <SectionMotion>
+          <WorkWithUsSection />
+        </SectionMotion>
+
+        <SectionMotion>
+          <FooterSection />
         </SectionMotion>
         </main>
       )}
