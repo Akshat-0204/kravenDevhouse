@@ -14,10 +14,11 @@ const navLinks = [
       { label: 'Growth Systems', href: '/services/growth-systems' },
       { label: 'Automation Systems', href: '/services/automation-systems' },
       { label: 'Intelligent Systems', href: '/services/intelligent-systems' },
+      { label: 'Software Solutions', href: '/services/software-solutions' },
     ],
   },
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Testimonials', href: '#testimonials' },
+  // { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -68,7 +69,7 @@ export default function SiteNavbar() {
       ].join(' ')}
     >
       <div className="flex items-center justify-between gap-4">
-        <button onClick={() => navigate('/')} className="flex items-center gap-3 text-left">
+        <button onClick={() => scrollToSection(navigate, 'top')} className="flex items-center gap-3 text-left">
           <span className="text-xl font-semibold tracking-[0.18em] text-[#efe7db] md:text-2xl">
             Kraven
           </span>
