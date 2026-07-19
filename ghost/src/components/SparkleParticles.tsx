@@ -89,7 +89,7 @@ export function SparkleParticles({
       enable: false,
       zIndex: zIndexLevel,
     },
-    fpsLimit: 300,
+    fpsLimit: 60,
     interactivity: {
       events: {
         onClick: {

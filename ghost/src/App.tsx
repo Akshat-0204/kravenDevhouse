@@ -340,7 +340,7 @@ function ScrollShell() {
               className="absolute inset-0 h-full w-full"
               particleColor="#f0e6d6"
               backgroundColor="transparent"
-              baseDensity={220}
+              baseDensity={140}
               particleCount={3}
               maxParticleSize={1.8}
               maxSpeed={0.6}
