@@ -31,7 +31,7 @@ const services = [
     title: 'Software Solutions',
     description:
       'Custom software and frontend engineering — from marketing sites to full product builds — for teams that need more than automation.',
-    image: '/softwareSolutionsService.png',
+    image: '/softwareSolutionsService.avif',
     href: '/services/software-solutions',
   },
 ]
