@@ -16,7 +16,7 @@ const FooterSection = () => {
           </h3>
 
           <p className="mt-6 text-zinc-500">
-            AI Systems & Automation.
+            Software, AI Systems & Automation.
           </p>
 
           <p className="mt-3 text-zinc-500">
@@ -53,7 +53,11 @@ const FooterSection = () => {
               </Link>
             </li>
 
-            
+            <li>
+              <Link to="/services/software-solutions" className="cursor-pointer hover:text-white">
+                Software Solutions
+              </Link>
+            </li>
           </ul>
         </div>
 

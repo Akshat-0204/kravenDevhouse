@@ -1,11 +1,18 @@
 import { motion } from 'framer-motion'
 import Threads from '../components/Threads'
+import { useSectionVisible } from '../hooks/useSectionVisible'
 
 const HowItWorksSection = () => {
+  const { ref, isVisible } = useSectionVisible<HTMLElement>()
+
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-black px-6 py-24 md:px-8">
+    <section
+      ref={ref}
+      id="how-it-works"
+      className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden bg-black px-6 py-24 md:px-8"
+    >
       <div className="absolute inset-0 opacity-55">
-        <Threads amplitude={1} distance={0} enableMouseInteraction />
+        {isVisible && <Threads amplitude={1} distance={0} enableMouseInteraction />}
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.2),rgba(0,0,0,0.72))]" />
 
