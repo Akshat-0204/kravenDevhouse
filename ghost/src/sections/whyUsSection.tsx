@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import Threads from '../components/Threads'
 import WhyUsCard from '../components/whyUsCard'
+import { useSectionVisible } from '../hooks/useSectionVisible'
 
 const reasons = [
   {
@@ -30,10 +31,15 @@ const reasons = [
 ]
 
 const WhyUsSection = () => {
+  const { ref, isVisible } = useSectionVisible<HTMLElement>()
+
   return (
-    <section className="relative w-full overflow-hidden bg-black px-6 py-24 md:px-10 md:py-32">
+    <section
+      ref={ref}
+      className="relative w-full overflow-hidden bg-black px-6 py-24 md:px-10 md:py-32"
+    >
       <div className="absolute inset-0 opacity-45">
-        <Threads amplitude={1} distance={0} enableMouseInteraction />
+        {isVisible && <Threads amplitude={1} distance={0} enableMouseInteraction />}
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.15),rgba(0,0,0,0.78))]" />
 
