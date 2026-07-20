@@ -85,9 +85,10 @@ function ScrollShell() {
 
   useEffect(() => {
     if (location.pathname !== '/') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const duration = 550
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+    const duration = 750
+    const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
 
     let animating = false
 
@@ -113,7 +114,7 @@ function ScrollShell() {
 
       const step = (now: number) => {
         const t = Math.min(1, (now - startTime) / duration)
-        window.scrollTo({ top: startY + distance * easeOutCubic(t), behavior: 'instant' as ScrollBehavior })
+        window.scrollTo({ top: startY + distance * easeInOutCubic(t), behavior: 'instant' as ScrollBehavior })
         if (t < 1) {
           requestAnimationFrame(step)
         } else {
