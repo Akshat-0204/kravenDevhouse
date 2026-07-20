@@ -445,11 +445,12 @@ function ScrollShell() {
               className="absolute inset-0 h-full w-full"
               particleColor="#f0e6d6"
               backgroundColor="transparent"
-              baseDensity={140}
-              particleCount={3}
-              maxParticleSize={1.8}
-              maxSpeed={0.6}
-              opacityAnimationSpeed={1.4}
+              baseDensity={200}
+              particleCount={15}
+              maxParticleSize={2}
+              minParticleOpacity={0.35}
+              maxSpeed={0.8}
+              opacityAnimationSpeed={2.8}
               enableHoverGrab
               enableParallax
               zIndexLevel={0}
