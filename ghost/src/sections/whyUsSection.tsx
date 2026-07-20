@@ -61,8 +61,8 @@ const WhyUsSection = () => {
             </h2>
           </div>
           <p className="max-w-2xl self-end text-sm leading-relaxed text-white/55 md:text-base">
-            We reworked this section into a more editorial rhythm: a bold intro, a
-            highlighted statement, and a grid of cards that feel more architectural.
+            We pair strategy with execution, so every system we ship is built to hold
+            up under real usage, not just look good in a pitch.
           </p>
         </motion.div>
 
@@ -81,8 +81,8 @@ const WhyUsSection = () => {
               We build with restraint so the work feels expensive, not busy.
             </h3>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/60 md:text-base">
-              The visual language stays monochrome and premium, but the structure now
-              has stronger contrast, hierarchy, and breathing room.
+              A monochrome, premium visual language with strong contrast, clear
+              hierarchy, and room to breathe.
             </p>
           </motion.div>
 

@@ -20,7 +20,7 @@ interface Star {
 
 export default function HyperspaceJump({
   className = '',
-  starCount = 340,
+  starCount = 100,
   colors = DEFAULT_COLORS,
 }: HyperspaceJumpProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -60,7 +60,7 @@ export default function HyperspaceJump({
       return {
         angle,
         z,
-        speed: 0.18 + Math.random() * 0.32,
+        speed: 0.3 + Math.random() * 0.5,
         color: pickColor(),
         twinklePhase: Math.random() * Math.PI * 2,
         prevX: cx,
@@ -109,7 +109,7 @@ export default function HyperspaceJump({
         star.prevX = cx + Math.cos(star.angle) * star.z
         star.prevY = cy + Math.sin(star.angle) * star.z
 
-        star.z += star.speed * (1 + star.z / maxDist) * 1.7
+        star.z += star.speed * (1 + star.z / maxDist) * 2.6
 
         const x = cx + Math.cos(star.angle) * star.z
         const y = cy + Math.sin(star.angle) * star.z
@@ -122,14 +122,20 @@ export default function HyperspaceJump({
         const progress = Math.min(1, star.z / maxDist)
         const twinkle = 0.85 + 0.15 * Math.sin(elapsed * 3 + star.twinklePhase)
         const alpha = Math.min(0.95, (progress * 0.85 + 0.05) * twinkle)
-        const lineWidth = Math.max(0.6, progress * 2.8)
+        const lineWidth = Math.max(1, progress * 4.5)
+
+        const trailStretch = 1.8
+        const dx = x - star.prevX
+        const dy = y - star.prevY
+        const trailX = x - dx * trailStretch
+        const trailY = y - dy * trailStretch
 
         ctx.strokeStyle = `rgba(${star.color}, ${alpha})`
         ctx.lineWidth = lineWidth
         ctx.shadowColor = `rgba(${star.color}, ${Math.min(0.6, alpha)})`
         ctx.shadowBlur = lineWidth * 1.8
         ctx.beginPath()
-        ctx.moveTo(star.prevX, star.prevY)
+        ctx.moveTo(trailX, trailY)
         ctx.lineTo(x, y)
         ctx.stroke()
       }
