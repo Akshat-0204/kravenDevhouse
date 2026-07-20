@@ -57,7 +57,6 @@ function ScrollShell() {
   const [navVisible, setNavVisible] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
-  const [transitionNonce, setTransitionNonce] = useState(0)
   const isDesktop = useIsDesktop()
   const { scrollY } = useScroll()
   const location = useLocation()
@@ -81,136 +80,6 @@ function ScrollShell() {
     setServicesOpen(false)
     if (location.pathname !== '/') {
       window.scrollTo(0, 0)
-    }
-  }, [location.pathname])
-
-  useEffect(() => {
-    if (location.pathname !== '/') return
-
-    const slideIds = ['how-it-works', 'services', 'why-us', 'contact']
-
-    const getCurrentIndex = () => {
-      const y = window.scrollY
-      if (y < window.innerHeight * 0.5) return -1
-      const footerEl = document.querySelector('footer')
-      if (footerEl && footerEl.getBoundingClientRect().top <= 10) {
-        return slideIds.length
-      }
-      let current = -1
-      slideIds.forEach((id, idx) => {
-        const el = document.getElementById(id)
-        if (el && el.getBoundingClientRect().top <= 10) {
-          current = idx
-        }
-      })
-      return current
-    }
-
-    const easeInOutQuint = (t: number) =>
-      t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2
-
-    const transitionDuration = 1300
-
-    const animateScrollTo = (targetY: number) => {
-      const clampedTarget = Math.max(
-        0,
-        Math.min(targetY, document.documentElement.scrollHeight - window.innerHeight),
-      )
-      const startY = window.scrollY
-      const distance = clampedTarget - startY
-      if (Math.abs(distance) < 1) return
-
-      const body = document.body
-      const previousSnapType = body.style.scrollSnapType
-      body.style.scrollSnapType = 'none'
-
-      const startTime = performance.now()
-
-      const step = (now: number) => {
-        const elapsed = now - startTime
-        const t = Math.min(1, elapsed / transitionDuration)
-        window.scrollTo({ top: startY + distance * easeInOutQuint(t), behavior: 'instant' as ScrollBehavior })
-        if (t < 1) {
-          requestAnimationFrame(step)
-        } else {
-          body.style.scrollSnapType = previousSnapType
-        }
-      }
-
-      requestAnimationFrame(step)
-    }
-
-    const scrollToIndex = (idx: number) => {
-      if (idx < 0) {
-        animateScrollTo(0)
-        return
-      }
-      if (idx >= slideIds.length) {
-        const footerEl = document.querySelector('footer')
-        if (footerEl) animateScrollTo(footerEl.getBoundingClientRect().top + window.scrollY)
-        return
-      }
-      const el = document.getElementById(slideIds[idx])
-      if (el) animateScrollTo(el.getBoundingClientRect().top + window.scrollY)
-    }
-
-    let isAnimating = false
-    const unlockDelay = transitionDuration + 150
-
-    const goTo = (delta: number) => {
-      if (isAnimating) return
-      isAnimating = true
-      setTransitionNonce((n) => n + 1)
-      scrollToIndex(getCurrentIndex() + delta)
-      window.setTimeout(() => {
-        isAnimating = false
-      }, unlockDelay)
-    }
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement | null
-      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
-        return
-      }
-
-      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
-        event.preventDefault()
-        goTo(1)
-      } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
-        event.preventDefault()
-        goTo(-1)
-      }
-    }
-
-    const onWheel = (event: WheelEvent) => {
-      event.preventDefault()
-      if (Math.abs(event.deltaY) < 4) return
-      goTo(event.deltaY > 0 ? 1 : -1)
-    }
-
-    let touchStartY = 0
-
-    const onTouchStart = (event: TouchEvent) => {
-      touchStartY = event.touches[0]?.clientY ?? 0
-    }
-
-    const onTouchEnd = (event: TouchEvent) => {
-      const endY = event.changedTouches[0]?.clientY ?? touchStartY
-      const delta = touchStartY - endY
-      if (Math.abs(delta) < 40) return
-      goTo(delta > 0 ? 1 : -1)
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    window.addEventListener('wheel', onWheel, { passive: false })
-    window.addEventListener('touchstart', onTouchStart, { passive: true })
-    window.addEventListener('touchend', onTouchEnd, { passive: true })
-
-    return () => {
-      window.removeEventListener('keydown', onKeyDown)
-      window.removeEventListener('wheel', onWheel)
-      window.removeEventListener('touchstart', onTouchStart)
-      window.removeEventListener('touchend', onTouchEnd)
     }
   }, [location.pathname])
 
@@ -257,15 +126,6 @@ function ScrollShell() {
 
   return (
     <div className="bg-black text-white">
-      {transitionNonce > 0 && (
-        <motion.div
-          key={transitionNonce}
-          className="pointer-events-none fixed inset-0 z-[70] bg-black"
-          initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-          animate={{ opacity: [0, 0.38, 0], backdropFilter: ['blur(0px)', 'blur(10px)', 'blur(0px)'] }}
-          transition={{ duration: 1.3, times: [0, 0.45, 1], ease: [0.22, 1, 0.36, 1] }}
-        />
-      )}
       <AnimatePresence>
         {navVisible && (
           <motion.header
