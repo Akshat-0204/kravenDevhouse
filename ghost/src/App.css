@@ -24,8 +24,16 @@ body,
 }
 
 body {
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   cursor: crosshair;
+}
+
+section,
+.scroll-section,
+footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 a,
