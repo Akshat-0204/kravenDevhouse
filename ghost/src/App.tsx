@@ -83,6 +83,101 @@ function ScrollShell() {
     }
   }, [location.pathname])
 
+  useEffect(() => {
+    if (location.pathname !== '/') return
+
+    const duration = 550
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+
+    let animating = false
+
+    const getSections = () => Array.from(document.querySelectorAll<HTMLElement>('section, footer'))
+
+    const getCurrentIndex = (sections: HTMLElement[]) => {
+      let current = 0
+      sections.forEach((el, idx) => {
+        if (el.getBoundingClientRect().top <= 10) current = idx
+      })
+      return current
+    }
+
+    const animateTo = (target: HTMLElement) => {
+      const startY = window.scrollY
+      const maxY = document.documentElement.scrollHeight - window.innerHeight
+      const endY = Math.min(target.getBoundingClientRect().top + startY, maxY)
+      const distance = endY - startY
+      if (Math.abs(distance) < 1) return
+
+      animating = true
+      const startTime = performance.now()
+
+      const step = (now: number) => {
+        const t = Math.min(1, (now - startTime) / duration)
+        window.scrollTo({ top: startY + distance * easeOutCubic(t), behavior: 'instant' as ScrollBehavior })
+        if (t < 1) {
+          requestAnimationFrame(step)
+        } else {
+          animating = false
+        }
+      }
+
+      requestAnimationFrame(step)
+    }
+
+    const goTo = (delta: number) => {
+      if (animating) return
+      const sections = getSections()
+      const idx = getCurrentIndex(sections)
+      const targetIdx = Math.min(Math.max(idx + delta, 0), sections.length - 1)
+      animateTo(sections[targetIdx])
+    }
+
+    const onWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaY) < 4) return
+      event.preventDefault()
+      goTo(event.deltaY > 0 ? 1 : -1)
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+        return
+      }
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        event.preventDefault()
+        goTo(1)
+      } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        event.preventDefault()
+        goTo(-1)
+      }
+    }
+
+    let touchStartY = 0
+
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0
+    }
+
+    const onTouchEnd = (event: TouchEvent) => {
+      const endY = event.changedTouches[0]?.clientY ?? touchStartY
+      const delta = touchStartY - endY
+      if (Math.abs(delta) < 40) return
+      goTo(delta > 0 ? 1 : -1)
+    }
+
+    window.addEventListener('wheel', onWheel, { passive: false })
+    window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchend', onTouchEnd, { passive: true })
+
+    return () => {
+      window.removeEventListener('wheel', onWheel)
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [location.pathname])
+
   const titleScale = useTransform(scrollY, [0, Math.max(heroHeight * 0.55, 1)], [1, 0.34])
   const titleY = useTransform(scrollY, [0, Math.max(heroHeight * 0.55, 1)], [0, -heroHeight * 0.32])
   const titleX = useTransform(scrollY, [0, Math.max(heroHeight * 0.55, 1)], [0, -20])
