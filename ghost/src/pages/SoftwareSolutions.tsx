@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import FooterSection from '../sections/footer'
 import SiteNavbar from '../components/SiteNavbar'
 import Threads from '../components/Threads'
@@ -398,12 +399,15 @@ export default function SoftwareSolutionsPage() {
             <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
               Let&apos;s build software that looks sharp, works reliably, and gives your team something they're actually proud to ship.
             </p>
-            <button className="mt-10 inline-flex items-center gap-3 rounded-full bg-[#efe4d6] px-7 py-3.5 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.03]">
+            <Link
+              to="/book-a-call?service=software-solutions"
+              className="mt-10 inline-flex items-center gap-3 rounded-full bg-[#efe4d6] px-7 py-3.5 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.03]"
+            >
               Let&apos;s Connect
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white">
                 →
               </span>
-            </button>
+            </Link>
           </div>
         </SectionBlock>
 

@@ -24,7 +24,7 @@ const FooterSection = () => {
           </p>
 
           <p className="mt-3 text-zinc-500">
-            hello@kraven.dev
+            hello@kravendevhouse.dev
           </p>
         </div>
 
@@ -105,8 +105,15 @@ const FooterSection = () => {
               LinkedIn
             </li>
 
-            <li className="cursor-pointer hover:text-white">
-              X
+            <li>
+              <a
+                href="https://x.com/kravendevhouse"
+                target="_blank"
+                rel="noreferrer"
+                className="cursor-pointer hover:text-white"
+              >
+                X
+              </a>
             </li>
 
             

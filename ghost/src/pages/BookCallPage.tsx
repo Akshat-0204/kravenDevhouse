@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { addDays, format, startOfDay } from 'date-fns'
-import { useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { DayPicker } from 'react-day-picker'
 import toast from 'react-hot-toast'
+import { useLocation } from 'react-router-dom'
 import FooterSection from '../sections/footer'
 import SiteNavbar from '../components/SiteNavbar'
 
@@ -23,6 +24,11 @@ const serviceCards = [
     key: 'intelligence',
     title: 'Intelligence Systems',
     subtitle: 'AI Agents, Reporting, Business Intelligence',
+  },
+  {
+    key: 'software',
+    title: 'Software Solutions',
+    subtitle: 'Frontend Engineering, Custom Software, APIs & Integrations',
   },
 ] as const
 
@@ -194,6 +200,7 @@ export default function BookCallPage() {
   const [openFaq, setOpenFaq] = useState(0)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<FormErrors>({})
+  const location = useLocation()
   const [form, setForm] = useState<FormState>({
     fullName: '',
     workEmail: '',
@@ -204,6 +211,17 @@ export default function BookCallPage() {
     preferredDate: undefined,
     preferredTime: '',
   })
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    if (params.get('service') !== 'software-solutions') return
+
+    setForm((current) =>
+      current.selectedServices.includes('Software Solutions')
+        ? current
+        : { ...current, selectedServices: [...current.selectedServices, 'Software Solutions'] },
+    )
+  }, [location.search])
 
   const tomorrow = useMemo(() => startOfDay(addDays(new Date(), 1)), [])
   const selectedDateLabel = formatDateLabel(form.preferredDate)
