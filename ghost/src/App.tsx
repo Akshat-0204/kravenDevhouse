@@ -18,6 +18,8 @@ import SoftwareSolutionsPage from './pages/SoftwareSolutions'
 import BookCallPage from './pages/BookCallPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import TermsOfServicePage from './pages/TermsOfServicePage'
+import CaseStudiesPage from './pages/CaseStudiesPage'
+import CaseStudyPage from './pages/CaseStudyPage'
 
 const ease = [0.22, 1, 0.36, 1] as const
 const navLinks = [
@@ -32,6 +34,7 @@ const navLinks = [
       { label: 'Software Solutions', href: '/services/software-solutions' },
     ],
   },
+  { label: 'Case Studies', href: '/case-studies' },
   { label: 'How It Works', href: '#how-it-works' },
   // { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
@@ -196,8 +199,15 @@ function ScrollShell() {
   const isBookCallRoute = location.pathname === '/book-a-call'
   const isPrivacyPolicyRoute = location.pathname === '/privacy-policy'
   const isTermsOfServiceRoute = location.pathname === '/terms-of-service'
+  const isCaseStudiesIndex = location.pathname === '/case-studies' || location.pathname === '/case-studies/'
+  const isCaseStudyDetail = location.pathname.startsWith('/case-studies/') && location.pathname !== '/case-studies/'
 
-
+  if (isCaseStudiesIndex) {
+    return <CaseStudiesPage />
+  }
+  if (isCaseStudyDetail) {
+    return <CaseStudyPage />
+  }
   if (isGrowthSystemsRoute) {
     return <GrowthSystemsPage />
   }

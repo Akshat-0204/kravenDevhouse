@@ -17,6 +17,7 @@ const navLinks = [
       { label: 'Software Solutions', href: '/services/software-solutions' },
     ],
   },
+  { label: 'Case Studies', href: '/case-studies' },
   { label: 'How It Works', href: '#how-it-works' },
   // { label: 'Testimonials', href: '#testimonials' },
   { label: 'Contact', href: '#contact' },
