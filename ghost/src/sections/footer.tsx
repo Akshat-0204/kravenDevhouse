@@ -69,6 +69,12 @@ const FooterSection = () => {
 
           <ul className="space-y-5 text-zinc-400">
             <li>
+              <Link to="/case-studies" className="cursor-pointer hover:text-white">
+                Case Studies
+              </Link>
+            </li>
+
+            <li>
               <button
                 type="button"
                 onClick={() => scrollToSection(navigate, 'contact')}
@@ -78,19 +84,15 @@ const FooterSection = () => {
               </button>
             </li>
 
-            
-
             <li>
               <button
                 type="button"
                 onClick={() => scrollToSection(navigate, 'how-it-works')}
                 className="cursor-pointer hover:text-white"
               >
-                Blog
+                How It Works
               </button>
             </li>
-
-           
           </ul>
         </div>
 

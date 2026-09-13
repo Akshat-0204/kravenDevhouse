@@ -19,7 +19,7 @@ const HomePage = () => {
       <div className="h-4 w-px bg-zinc-800" />
 
       <li className="cursor-pointer px-5 text-sm font-light italic text-zinc-400 transition-colors hover:text-white">
-        Case Studies
+        <Link to="/case-studies">Case Studies</Link>
       </li>
 
       <div className="h-4 w-px bg-zinc-800" />
