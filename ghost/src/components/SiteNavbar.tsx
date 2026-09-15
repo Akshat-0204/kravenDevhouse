@@ -58,17 +58,19 @@ export default function SiteNavbar() {
   }, [location.pathname])
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease }}
-      className={[
-        'fixed left-1/2 top-4 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-[1.5rem] px-4 py-3 md:top-5',
-        scrolled
-          ? 'border border-white/10 bg-black/45 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl'
-          : 'border border-white/8 bg-black/20 backdrop-blur-xl',
-      ].join(' ')}
-    >
+    <>
+      <div className="navbar-fading-blur" />
+      <motion.header
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease }}
+        className={[
+          'fixed left-1/2 top-4 z-50 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-[1.5rem] px-4 py-3 md:top-5',
+          scrolled
+            ? 'border border-white/10 bg-black/45 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl'
+            : 'border border-white/8 bg-black/20 backdrop-blur-xl',
+        ].join(' ')}
+      >
       <div className="flex items-center justify-between gap-4">
         <button onClick={() => scrollToSection(navigate, 'top')} className="flex items-center gap-3 text-left">
           <span className="text-xl font-semibold tracking-[0.18em] text-[#efe7db] md:text-2xl">
@@ -196,5 +198,6 @@ export default function SiteNavbar() {
         </div>
       </div>
     </motion.header>
+    </>
   )
 }
